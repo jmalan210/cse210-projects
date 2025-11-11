@@ -5,8 +5,9 @@ using System.Text.Json;
 
 public class Library
 {
-   
+
     private List<Scripture> _scriptures = new();
+    Random _randomScrip = new Random();
 
     public void Load()
     {
@@ -65,8 +66,9 @@ public class Library
         if (_scriptures.Count == 0)
             return null;
 
-        Random randomScrip = new Random();
-        int index = randomScrip.Next(_scriptures.Count);
-        return _scriptures[index];
+        int index = _randomScrip.Next(_scriptures.Count);
+        Scripture scrip = _scriptures[index];
+        _scriptures.RemoveAt(index);
+        return scrip;
     }
 }

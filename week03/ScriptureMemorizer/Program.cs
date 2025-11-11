@@ -1,46 +1,64 @@
 //Author: Jennifer Malan
-//Creativity Added: Handled invalid input. Add a congratulations message that uses the scripture reference. 
+//Creativity Added: Designed program to select a random scripture from a JSON data file. Added a loop to offer the user the opportunity to memorize another scripture.
 using System;
 using System.Security.AccessControl;
 using System.Linq;
+using System.Text.Json;
+
 
 class Program
 {
+
     static void Main(string[] args)
     {
+    while (true) {
+        Library lib = new Library();
+        lib.Load();
 
-        Console.Clear();
+        Scripture scripture = lib.GetRandomScripture();
 
-        Reference r1 = new Reference("Isaiah", 9, 6); 
-
-        Word word = new Word("For unto us a child is born, unto us a son is given: and the government shall be upon his shoulder: and his name shall be called Wonderful, Counsellor, The mighty God, The everlasting Father, The Prince of Peace.");
-
-        Scripture scripture = new Scripture(r1, word.GetWordsDisplayText());
-        string displayText = scripture.GetScriptureDisplayText();
-        Console.WriteLine(displayText);
-
-
-        while (true){
-        Console.WriteLine("\nPress enter to continue or type 'quit' to finish:");
-
-        string entry = Console.ReadLine();
-
-        if (entry.ToLower() == "quit")
+        if (scripture == null)
         {
+            Console.WriteLine("No scriptures loaded.");
             return;
         }
 
-            if (entry == "")
+        Console.Clear();
+        Console.WriteLine(scripture.GetScriptureDisplayText());
+
+        while (true) {
+                Console.WriteLine("\nPress enter to hide words or type 'quit' to finish:");
+                string entry = Console.ReadLine();
+
+            if (entry.ToLower() == "quit")
             {
-                scripture.HideRandomWords(8);
-                Console.Clear();
-                Console.WriteLine(scripture.GetScriptureDisplayText());
+                return;
+            }
+
+            if (entry == "")
+                {
+                    scripture.HideRandomWords(5);
+                    Console.Clear();
+                    Console.WriteLine(scripture.GetScriptureDisplayText());
 
                 if (scripture.EveryWordHidden())
                 {
-                    string scripRef = r1.GetReferenceDisplayText();
-                    Console.WriteLine($"Congratulations! You've memorized {scripRef}!");
-                    return;
+
+                    string reference = scripture.GetScriptureReference().GetReferenceDisplayText();
+                    Console.WriteLine($"\nCongratulations! You've memorized {reference}!");
+                    Console.WriteLine("\nWould you like to memorize another scripture? (type yes, or press enter to quit)");
+                    string answer = Console.ReadLine().ToLower();
+                        if (answer == "yes")
+                        {
+                            break;
+                        }
+
+                        else
+                        {
+                            return;
+                        }
+                           
+                        
                 }
 
             }
@@ -56,4 +74,6 @@ class Program
 
 
     }
+}
+
 }

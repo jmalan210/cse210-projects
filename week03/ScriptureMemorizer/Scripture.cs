@@ -42,7 +42,6 @@ public class Scripture
             displayText += word.GetWordsDisplayText() + ' ';
         }
         return displayText.Trim();
-
     }
 
     public Reference GetScriptureReference()
@@ -54,7 +53,4 @@ public class Scripture
     {
         return _words.All(w => w.IsHidden());
     }
-
-
-
 }

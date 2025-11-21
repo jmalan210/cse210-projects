@@ -1,5 +1,5 @@
 //Author: Jennifer Malan
-//Creativity Shown: 
+//Creativity Shown: optimized randomizers so that prompts aren't repeated (did so by removing items from a working list so the original list isn't altered).
 using System;
 
 class Program

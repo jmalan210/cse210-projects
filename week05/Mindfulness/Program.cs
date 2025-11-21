@@ -28,7 +28,8 @@ class Program
 
             else if (menuChoice == "2")
             {
-
+                Reflection reflection = new Reflection();
+                reflection.DisplayStartMsg();
             }
 
             else if (menuChoice == "3")

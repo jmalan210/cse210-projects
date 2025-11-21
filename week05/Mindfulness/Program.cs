@@ -1,3 +1,5 @@
+//Author: Jennifer Malan
+//Creativity Shown: 
 using System;
 
 class Program
@@ -27,6 +29,7 @@ class Program
             {
                 Reflection reflection = new Reflection();
                 reflection.DisplayStartMsg();
+                reflection.Run();
                 reflection.DisplayEndMsg();
             }
 

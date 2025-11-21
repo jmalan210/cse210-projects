@@ -19,7 +19,7 @@ class Program
             {
                 Breathing breathing = new Breathing();
                 breathing.DisplayStartMsg();
-                // breathing.Run();
+                breathing.Run();
                 breathing.DisplayEndMsg();
             }
 

@@ -9,7 +9,22 @@ public class Breathing : Activity
     public void Run()
     {
         Console.WriteLine("Prepare to begin...");
-        Thread.Sleep(5000);
-        Console.WriteLine("Breathe in...");
+        ShowSpinner(5);
+
+        int duration = GetDuration();
+        DateTime endTime = DateTime.Now.AddSeconds(duration);
+
+        while (DateTime.Now < endTime)
+        {
+            Console.WriteLine("Breathe in...");
+            ShowCountDown(4);
+            Console.WriteLine("Breathe out...");
+            ShowCountDown(6);
+
+        }
+
+
+        Console.WriteLine("Done");
+        ShowSpinner(3);
     }
 }

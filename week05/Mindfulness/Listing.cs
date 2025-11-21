@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 public class Listing : Activity
 
 {
@@ -30,22 +32,32 @@ public class Listing : Activity
         return prompt;
     }
 
-    
+
     public List<string> GetListFromUser()
     {
         List<string> userList = new List<string>();
         int duration = GetDuration();
         DateTime endTime = DateTime.Now.AddSeconds(duration);
-
+        int i = 1;
         while (DateTime.Now < endTime)
         {
-            int i = 1;
             Console.Write($"{i}.");
             string input = Console.ReadLine();
             userList.Add(input);
             i++;
         }
         return userList;
+    }
+    
+    public void Run()
+    {
+        Console.WriteLine(GetRandomPrompt());
+        ShowSpinner(5);
+        List<string> displayList = GetListFromUser();
+        Console.WriteLine("Done");
+        ShowSpinner(3);
+       _count = displayList.Count();
+        Console.Write($"You listed {_count} items.");
     }
     
 }

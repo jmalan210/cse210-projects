@@ -37,6 +37,7 @@ class Program
             {
                 Listing listing = new Listing();
                 listing.DisplayStartMsg();
+                listing.Run();
                 listing.DisplayEndMsg();
             }
 

@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Welcome to the Mindfulness Project.");
+        Console.WriteLine("Welcome to the Mindfulness Project");
 
         while (true) {
            
@@ -17,24 +17,24 @@ class Program
 
             if (menuChoice == "1")
             {
-
                 Breathing breathing = new Breathing();
                 breathing.DisplayStartMsg();
-                breathing.Run();
+                // breathing.Run();
                 breathing.DisplayEndMsg();
-                
-
             }
 
             else if (menuChoice == "2")
             {
                 Reflection reflection = new Reflection();
                 reflection.DisplayStartMsg();
+                reflection.DisplayEndMsg();
             }
 
             else if (menuChoice == "3")
             {
-
+                Listing listing = new Listing();
+                listing.DisplayStartMsg();
+                listing.DisplayEndMsg();
             }
 
             else if (menuChoice == "4")

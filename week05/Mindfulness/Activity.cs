@@ -7,14 +7,19 @@ public class Activity
     private string _endMsg;
     private int _duration;
     private string _activity;
-
-    public Activity(string startMsg, string endMsg, string activity)
+    private User _user;
+    public Activity(string startMsg, string endMsg, string activity, User user)
     {
         _startMsg = startMsg;
         _endMsg = endMsg;
         _activity = activity;
+        _user = user;
     }
 
+    public string GetUserName()
+    {
+        return _user.GetUserName();
+    }
     public void DisplayStartMsg()
     {
         Console.WriteLine(_startMsg);
@@ -26,7 +31,7 @@ public class Activity
     {
         Console.WriteLine(_endMsg);
         ShowSpinner(3);
-        Console.WriteLine($"You spent {_duration} seconds on {_activity}.");
+        Console.WriteLine($"You spent {_duration} seconds on {_activity}, {GetUserName()}.\n");
         ShowSpinner(3);
     }
 

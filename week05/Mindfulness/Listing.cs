@@ -13,8 +13,8 @@ public class Listing : Activity
     };
     private List<string> _availablePrompts; //working copy so randomizer does not alter original list
     Random _randomPrompt = new Random();
-    public Listing()
-    : base("This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.", "Well done on completing your listing exercise!", "listing")
+    public Listing(User user)
+    : base("This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.", "Well done on completing your listing exercise!", "listing", user)
     {
         _availablePrompts = new List<string>(_prompts);
     }
@@ -57,7 +57,7 @@ public class Listing : Activity
         Console.WriteLine("Done");
         ShowSpinner(3);
        _count = displayList.Count();
-        Console.Write($"You listed {_count} items.");
+        Console.Write($"You listed {_count} items. ");
     }
     
 }

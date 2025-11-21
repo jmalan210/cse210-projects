@@ -21,8 +21,8 @@ public class Reflection : Activity
     private List<string> _availableQuestions; //working copy so randomizer doesn't permanently alter original list.
     Random _randomPrompt = new Random();
     Random _randomQuestion = new Random();
-    public Reflection()
-        : base("This activity will help you reflect on times in your life when you have shown strength and resilience.This will help you recognize the power you have and how you can use it in other aspects of your life.", "Well done on completing your reflection exercise!", "reflection")
+    public Reflection(User user)
+        : base("This activity will help you reflect on times in your life when you have shown strength and resilience.This will help you recognize the power you have and how you can use it in other aspects of your life.", "Well done on completing your reflection exercise!", "reflection", user)
     {
         _availablePrompts = new List<string>(_prompts);
         _availableQuestions = new List<string>(_questions);

@@ -1,5 +1,5 @@
 //Author: Jennifer Malan
-//Creativity Shown: optimized randomizers so that prompts aren't repeated (did so by removing items from a working list so the original list isn't altered).
+//Creativity Shown: Added a User class that handles the user name and the number of activities they completed. Their name is used throughout and they get a count of activities reported to them when they quit. Optimized randomizers so that prompts aren't repeated (did so by removing items from a working list so the original list isn't altered).
 using System;
 
 class Program
@@ -7,6 +7,10 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Welcome to the Mindfulness Project");
+        Console.WriteLine("What is your name?");
+        string userName = Console.ReadLine();
+        User user = new User(userName);
+        Console.WriteLine($"Welcome {userName}!");
 
         while (true) {
            
@@ -19,30 +23,43 @@ class Program
 
             if (menuChoice == "1")
             {
-                Breathing breathing = new Breathing();
+                Breathing breathing = new Breathing(user);
                 breathing.DisplayStartMsg();
                 breathing.Run();
                 breathing.DisplayEndMsg();
+                user.AddActivity();
+                
             }
 
             else if (menuChoice == "2")
             {
-                Reflection reflection = new Reflection();
+                Reflection reflection = new Reflection(user);
                 reflection.DisplayStartMsg();
                 reflection.Run();
                 reflection.DisplayEndMsg();
+                user.AddActivity();
             }
 
             else if (menuChoice == "3")
             {
-                Listing listing = new Listing();
+                Listing listing = new Listing(user);
                 listing.DisplayStartMsg();
                 listing.Run();
                 listing.DisplayEndMsg();
+                user.AddActivity();
             }
 
             else if (menuChoice == "4")
             {
+                Console.WriteLine($"Thanks for taking time for mindfulness today, {userName}!");
+                if (user.GetActivityCount() == 1)
+                {
+                    Console.WriteLine($"You did {user.GetActivityCount()} activity today.");
+                }
+                else
+                {
+                    Console.WriteLine($"You did {user.GetActivityCount()} activities today.");
+                }
                 break;
             }
 

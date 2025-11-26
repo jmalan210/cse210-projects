@@ -59,6 +59,7 @@ public class Reflection : Activity
     {
         int duration =GetDuration();
         Console.WriteLine(GetRandomPrompt());
+        ShowSpinner(10);
         DateTime endTime = DateTime.Now.AddSeconds(duration);
 
         while (DateTime.Now < endTime)

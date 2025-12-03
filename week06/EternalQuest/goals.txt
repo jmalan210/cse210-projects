@@ -1,0 +1,2 @@
+Talk, Give a talk, 50, False
+Lesson, Give a lesson, 50, False

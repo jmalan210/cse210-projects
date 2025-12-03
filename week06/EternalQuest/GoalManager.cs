@@ -43,15 +43,28 @@ public class GoalManager
 
             else if (choice == "5")
             {
+                if (_goals.Count == 0)
+                {
+                    Console.WriteLine("There are no goals to display");
+                    continue;
+                }
                 Console.WriteLine("The goals are:");
                 int i = 1;
                 foreach (Goal g in _goals)
                 {
-                    g.GetName();
+                    Console.WriteLine($"{i}. {g.GetName()}");
                     i++;
                 }
                 Console.WriteLine("Which goal did you accomplish?");
-                RecordEvent();
+                int input = int.Parse(Console.ReadLine()) -1;
+                if (input >= 0 && input < _goals.Count)
+                {
+                    _goals[input].RecordEvent();
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid input. Please enter a number from 1 to {_goals.Count}");
+                }
             }
 
             else if (choice == "6")

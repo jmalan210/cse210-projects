@@ -1,2 +1,4 @@
-Talk, Give a talk, 50, False
-Lesson, Give a lesson, 50, False
+SimpleGoal|talk|talk|10|True
+EternalGoal|read|read|10
+ChecklistGoal|temple|temple|10|True|3|3|100
+ChecklistGoal|Wake up early|Wake up by 7 am|10|False|5|0|100

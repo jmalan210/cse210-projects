@@ -22,6 +22,6 @@ public class EternalGoal : Goal
         string description = GetDescription();
         int points = GetPoints();
        
-        return $"{name}, {description}, {points}";
+        return $"EternalGoal|{name}|{description}|{points}";
     }
 }

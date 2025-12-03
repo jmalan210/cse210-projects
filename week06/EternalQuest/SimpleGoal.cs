@@ -7,12 +7,18 @@ public class SimpleGoal : Goal
     public SimpleGoal(string name, string description, int points)
             : base(name, description, points)
     {
-        
+       
     }
 
     public override void RecordEvent()
     {
+        _isComplete = true;
+        
+    }
 
+    public void SetComplete(bool complete)
+    {
+        _isComplete = complete;
     }
 
     public override bool IsComplete()
@@ -26,7 +32,7 @@ public class SimpleGoal : Goal
         string description = GetDescription();
         int points = GetPoints();
         bool completed = IsComplete();
-        return $"{name}, {description}, {points}, {completed}";
+        return $"SimpleGoal|{name}|{description}|{points}|{completed}";
 
     }    
         

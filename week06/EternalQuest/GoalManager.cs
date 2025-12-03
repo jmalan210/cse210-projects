@@ -14,11 +14,13 @@ public class GoalManager
     public void Start()
     {
         Console.WriteLine("Welcome to the Eternal Quest Goal Game!\n\n");
-        DisplayPlayerInfo();
+        // DisplayPlayerInfo();
 
         while (true)
         {
-            Console.WriteLine("Please select one of the following options:\n1.Create a new goal\n2.List goals\n3.Save goals\n4.Load goals\n5.Record event\n6.Quit\n");
+            DisplayPlayerInfo();
+
+            Console.WriteLine("\nPlease select one of the following options:\n1.Create a new goal\n2.List goals\n3.Save goals\n4.Load goals\n5.Record event\n6.Quit\n");
             string choice = Console.ReadLine();
 
             if (choice == "1")
@@ -63,7 +65,7 @@ public class GoalManager
                 }
                 else
                 {
-                    Console.WriteLine($"Invalid input. Please enter a number from 1 to {_goals.Count}");
+                    Console.WriteLine($"Invalid input. Please enter a number from 1 to {_goals.Count-1}");
                 }
             }
 
@@ -92,6 +94,8 @@ public class GoalManager
             Console.WriteLine("No goals to display");
             return;
         }
+
+        Console.WriteLine("\n\nYour goals are:");
         int i = 1;
         foreach (Goal g in _goals)
         {
@@ -103,11 +107,15 @@ public class GoalManager
             {
                 checkbox = "[X]";
             }
-            Console.Write($"{checkbox} {i}. {name} ({description}) ");
 
-            if (g is ChecklistGoal)
+            if (g is SimpleGoal || g is EternalGoal)
             {
-                Console.WriteLine(g.GetDetailsString());
+                Console.WriteLine($"{i}.{checkbox} {name} ({description})");
+            }
+            
+            else if (g is ChecklistGoal)
+            {
+                Console.WriteLine($"{i}.{checkbox} {name} ({description}){g.GetDetailsString()}");
             }
 
             i++;
@@ -184,6 +192,54 @@ public class GoalManager
     
     public void LoadGoals()
     {
-        
+        Console.WriteLine("What is the file name?");
+        string fileName = Console.ReadLine();
+        string[] lines = System.IO.File.ReadAllLines(fileName);
+
+        _goals.Clear();
+
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split("|");
+            string goalType = parts[0];
+
+            if (goalType == "SimpleGoal")
+            {
+                string goalName = parts[1];
+                string goalDesc = parts[2];
+                int goalPoints = int.Parse(parts[3]);
+                bool goalCompleted = bool.Parse(parts[4]);
+                SimpleGoal g = new SimpleGoal(goalName, goalDesc, goalPoints);
+                g.SetComplete(goalCompleted);
+                _goals.Add(g);
+            }
+
+            else if (goalType == "EternalGoal")
+            {
+                string goalName = parts[1];
+                string goalDesc = parts[2];
+                int goalPoints = int.Parse(parts[3]);
+                EternalGoal g = new EternalGoal(goalName, goalDesc, goalPoints);
+                _goals.Add(g);
+            }
+
+            else if (goalType == "ChecklistGoal")
+            {
+                string goalName = parts[1];
+                string goalDesc = parts[2];
+                int goalPoints = int.Parse(parts[3]);
+                bool goalCompleted = bool.Parse(parts[4]);
+                int goalTarget = int.Parse(parts[5]);
+                int goalAmtCompleted = int.Parse(parts[6]);
+                int goalBonus = int.Parse(parts[7]);
+                ChecklistGoal g = new ChecklistGoal(goalName, goalDesc, goalPoints, goalTarget, goalBonus);
+                g.SetDetailString(goalAmtCompleted, goalTarget);
+                g.IsComplete();
+                _goals.Add(g);
+            }
+
+
+        }
+        ListGoalNames();
     }
 }

@@ -58,7 +58,7 @@ public class GoalManager
                     i++;
                 }
                 while (true) {
-                    Console.WriteLine("Which goal did you accomplish?");
+                    Console.WriteLine("Which goal do you want to record an event for?");
                     int input = int.Parse(Console.ReadLine()) - 1;
                     if (input >= 0 && input < _goals.Count)
                     {
@@ -125,7 +125,7 @@ public class GoalManager
                 Console.WriteLine($"{i}.{checkbox} {name} ({description})");
             }
             
-            else if (g is ChecklistGoal)
+            else if (g is ChecklistGoal || g is MilestoneGoal)
             {
                 Console.WriteLine($"{i}.{checkbox} {name} ({description}){g.GetDetailsString()}");
             }
@@ -138,7 +138,8 @@ public class GoalManager
     {
         while (true)
         {
-            Console.Write("What type of goal would you like to create?\n1.Simple Goal\n2.Eternal Goal\n3.Checklist Goal\n");
+            int points = 0;
+            Console.WriteLine("What type of goal would you like to create?\n1.Simple Goal\n2.Eternal Goal\n3.Checklist Goal\n4.Milestone Goal");
             string goalChoice = Console.ReadLine();
 
             Console.WriteLine("What is the name of your goal?");
@@ -147,8 +148,17 @@ public class GoalManager
             Console.WriteLine("Give a short description of your goal:");
             string description = Console.ReadLine();
 
-            Console.WriteLine("How many points are associated with this goal?");
-            int points = int.Parse(Console.ReadLine());
+            if (goalChoice == "4")
+            {
+                Console.WriteLine("How many points are associated with each milestone of this goal?");
+                points = int.Parse(Console.ReadLine());
+            }
+            else
+            {
+                Console.WriteLine("How many points are associated with this goal?");
+                points = int.Parse(Console.ReadLine());
+            }
+            
 
             if (goalChoice == "1")
             {
@@ -172,19 +182,24 @@ public class GoalManager
                 _goals.Add(checklistGoal);
             }
 
+            else if (goalChoice == "4")
+            {
+                Console.WriteLine("How many milestones do you want to meet before accomplishing this goal?");
+                int target = int.Parse(Console.ReadLine());
+                Console.WriteLine("How many bonus points will you earn for meeting all the milestones?");
+                int completionBonus = int.Parse(Console.ReadLine());
+                MilestoneGoal milestoneGoal = new MilestoneGoal(name, description, points, target, completionBonus);
+                _goals.Add(milestoneGoal);
+            }
+
             else
             {
                 Console.WriteLine("Invalid input.  Please select a number from 1-3");
-                
+
             }
             return;
            
         }
-    }
-
-    public void RecordEvent()
-    {
-
     }
 
     public void SaveGoals()
@@ -259,6 +274,21 @@ public class GoalManager
                 int goalBonus = int.Parse(parts[7]);
                 ChecklistGoal g = new ChecklistGoal(goalName, goalDesc, goalPoints, goalTarget, goalBonus);
                 g.SetDetailString(goalAmtCompleted, goalTarget);
+                g.IsComplete();
+                _goals.Add(g);
+            }
+
+            else if (goalType == "MilestoneGoal")
+            {
+                string goalName = parts[1];
+                string goalDesc = parts[2];
+                int goalPoints = int.Parse(parts[3]);
+                bool goalCompleted = bool.Parse(parts[4]);
+                int goalTarget = int.Parse(parts[5]);
+                int milestonesMet = int.Parse(parts[6]);
+                int completionBonus = int.Parse(parts[7]);
+                MilestoneGoal g = new MilestoneGoal(goalName, goalDesc, goalPoints, goalTarget, completionBonus);
+                g.SetDetailString(milestonesMet, goalTarget);
                 g.IsComplete();
                 _goals.Add(g);
             }

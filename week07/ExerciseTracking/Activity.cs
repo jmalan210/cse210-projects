@@ -1,0 +1,34 @@
+using System.Runtime.CompilerServices;
+
+public abstract class Activity
+{
+    private string _date;
+    private int _lengthInMinutes;
+
+    public Activity(string date, int lengthInMinutes)
+    {
+        _date = date;
+        _lengthInMinutes = lengthInMinutes;
+    }
+
+    public string GetDate()
+    {
+        return _date;
+    }
+
+    public int GetLengthInMinutes()
+    {
+        return _lengthInMinutes;
+    }
+    public abstract double GetDistance();
+
+    public abstract double GetSpeed();
+
+    public abstract double GetPace();
+
+    public string GetSummary()
+    {
+        string summary = $"{_date} {this.GetType().Name} ({_lengthInMinutes} min)-Distance {GetDistance():F1} miles, Speed {GetSpeed():F1} mph, Pace {GetPace():F1} min per mile";
+        return summary;
+    }
+}

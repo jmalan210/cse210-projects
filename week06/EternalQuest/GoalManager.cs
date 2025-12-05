@@ -14,11 +14,11 @@ public class GoalManager
     public void Start()
     {
         Console.WriteLine("Welcome to the Eternal Quest Goal Game!\n\n");
-        // DisplayPlayerInfo();
-
+      
+        DisplayPlayerInfo();
         while (true)
         {
-            DisplayPlayerInfo();
+           
 
             Console.WriteLine("\nPlease select one of the following options:\n1.Create a new goal\n2.List goals\n3.Save goals\n4.Load goals\n5.Record event\n6.Quit\n");
             string choice = Console.ReadLine();
@@ -57,18 +57,30 @@ public class GoalManager
                     Console.WriteLine($"{i}. {g.GetName()}");
                     i++;
                 }
-                Console.WriteLine("Which goal did you accomplish?");
-                int input = int.Parse(Console.ReadLine()) -1;
-                if (input >= 0 && input < _goals.Count)
-                {
-                    _goals[input].RecordEvent();
-                }
-                else
-                {
-                    Console.WriteLine($"Invalid input. Please enter a number from 1 to {_goals.Count-1}");
+                while (true) {
+                    Console.WriteLine("Which goal did you accomplish?");
+                    int input = int.Parse(Console.ReadLine()) - 1;
+                    if (input >= 0 && input < _goals.Count)
+                    {
+                        int pointsEarned = _goals[input].RecordEvent();
+                        _score += pointsEarned;
+                        Console.WriteLine($"You earned {pointsEarned} points!");
+                        Console.WriteLine($"Your total score is {_score}");
+
+                        break;
+                    }
+                    else
+                    {
+                        if (_goals.Count == 1)
+                        {
+                            Console.WriteLine("Invalid input. Please enter 1");
+                        }
+                        else {
+                            Console.WriteLine($"Invalid input. Please enter a number from 1 to {_goals.Count}");
+                        }
+                    }
                 }
             }
-
             else if (choice == "6")
             {
                 break;
@@ -95,7 +107,7 @@ public class GoalManager
             return;
         }
 
-        Console.WriteLine("\n\nYour goals are:");
+        Console.WriteLine("\nYour goals are:");
         int i = 1;
         foreach (Goal g in _goals)
         {
@@ -182,6 +194,7 @@ public class GoalManager
 
         using (StreamWriter outputFile = new StreamWriter(fileName))
         {
+            outputFile.WriteLine(_score);
             foreach (Goal g in _goals)
             {
                 outputFile.WriteLine(g.GetStringRepresentation());
@@ -194,8 +207,20 @@ public class GoalManager
     {
         Console.WriteLine("What is the file name?");
         string fileName = Console.ReadLine();
-        string[] lines = System.IO.File.ReadAllLines(fileName);
 
+        var allLines = File.ReadLines(fileName).ToList();
+
+        if (allLines.Count == 0)
+        {
+            Console.WriteLine("No Goals Saved!");
+            return;
+        }
+
+        string firstLine = allLines[0];
+        string[] lines = allLines.Skip(1).ToArray();
+
+        Console.WriteLine($"\nYour score is {firstLine}");
+        _score = int.Parse(firstLine);
         _goals.Clear();
 
         foreach (string line in lines)
@@ -237,8 +262,6 @@ public class GoalManager
                 g.IsComplete();
                 _goals.Add(g);
             }
-
-
         }
         ListGoalNames();
     }

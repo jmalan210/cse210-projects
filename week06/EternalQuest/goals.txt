@@ -1,4 +1,4 @@
-SimpleGoal|talk|talk|10|True
-EternalGoal|read|read|10
-ChecklistGoal|temple|temple|10|True|3|3|100
-ChecklistGoal|Wake up early|Wake up by 7 am|10|False|5|0|100
+110
+SimpleGoal|Give a talk in church|Give a talk when asked|50|True
+EternalGoal|Read scriptures|Read for 10 min each day|10
+ChecklistGoal|Go to the temple|Go to the temple and perform any ordinance|50|False|3|1|100
